@@ -302,7 +302,7 @@ try {
 $('current-year').textContent = new Date().getFullYear();
 $('whatsapp-direct-btn').href = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent("Hello " + CONFIG.brandName + ", I want to ask about your menu and delivery.")}`;
 
-/* ---------- SCROLL-SYNCED VIDEO (desktop + mobile: seek) ---------- */
+/* ---------- SCROLL-SYNCED VIDEO (desktop: seek, mobile: hybrid) ---------- */
 (function () {
   const video = $('scroll-video');
   const container = $('hero-container');
@@ -311,7 +311,7 @@ $('whatsapp-direct-btn').href = `https://wa.me/${CONFIG.whatsappNumber}?text=${e
   const sticky = container.firstElementChild;
   const isTouch = window.matchMedia('(pointer: coarse)').matches;
   const EASE = 0.12;          // desktop smoothing: 0.05 = bohat naram, 0.3 = tez
-  let current = 0, unlocked = false, lastSeekAt = 0;
+  let current = 0, unlocked = false, canPlay = true, playing = false, rate = 1, lastSeekAt = 0;
 
   /* Address bar chhupne se innerHeight badalti hai, is liye hero ki apni height use hoti hai */
   let heroTop = 0, total = 0, lastW = 0;
@@ -340,16 +340,33 @@ $('whatsapp-direct-btn').href = `https://wa.me/${CONFIG.whatsappNumber}?text=${e
     requestAnimationFrame(loopDesktop);
   }
 
-  /* MOBILE: dono taraf (upar/neeche) wahi seek wala tareeqa, jo upar scroll par
-     pehle se smooth chal raha hai. Forward play band, kyunke play/pause aur
-     playbackRate baar baar badalne se decoder atakta tha. */
+  /* MOBILE: hybrid.
+     - Scroll down: video normal play hoti hai (isi se mobile par data bhi buffer hota
+       hai, jis se baad ka seek smooth hota hai). Speed sirf 3 fixed darjon mein badalti
+       hai (1x/2x/4x) aur play/pause ke liye alag start/stop hadd hai (hysteresis),
+       taake baar baar badalne se decoder na atke.
+     - Scroll up: video pause, aur throttled seek se peechay aati hai. */
   function loopTouch(now) {
     if (video.duration) {
       const target = getProgress() * video.duration;
       const diff = target - video.currentTime;
-      if (Math.abs(diff) > 0.03 && !video.seeking && now - lastSeekAt > 90) {
-        lastSeekAt = now;
-        seekTo(video.currentTime + diff * 0.5);   // aadha faasla, naram chaal
+
+      if (canPlay && (diff > 0.15 || (playing && diff > 0.03))) {
+        const r = diff > 1 ? 4 : diff > 0.4 ? 2 : 1;
+        if (r !== rate) { rate = r; video.playbackRate = r; }
+        if (video.paused) {
+          playing = true;
+          const p = video.play();
+          if (p && p.catch) p.catch(() => { canPlay = false; playing = false; });  // play block ho to seek par wapas
+        }
+      } else {
+        playing = false;
+        if (!video.paused) video.pause();
+        // peechay jana hamesha seek se; aage tab jab play block ho
+        if ((diff < -0.05 || (!canPlay && diff > 0.05)) && !video.seeking && now - lastSeekAt > 90) {
+          lastSeekAt = now;
+          seekTo(video.currentTime + diff * 0.5);   // aadha faasla, naram wapsi
+        }
       }
     }
     requestAnimationFrame(loopTouch);
