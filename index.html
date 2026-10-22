@@ -7,22 +7,22 @@
 <link rel="icon" type="image/png" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Kaushan+Script&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Kaushan+Script&family=Poppins:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
 tailwind.config = { theme: { extend: {
-  colors: { brandYellow:'#FFC20E', brandRed:'#E3262B', brandDark:'#1A1A1A', brandCream:'#FFF8E1' },
-  fontFamily: { display:['Anton','Bebas Neue','sans-serif'], script:['Kaushan Script','cursive'], sans:['Poppins','sans-serif'] }
+  colors: { brandYellow:'#FFC20E', brandRed:'#E3262B', brandDark:'#1A1A1A', brandCream:'#FFF8E1', nexusBlue:'#0052FF', nexusCyan:'#00F0FF', nexusDark:'#0D1117' },
+  fontFamily: { display:['Anton','Bebas Neue','sans-serif'], script:['Kaushan Script','cursive'], sans:['Poppins','sans-serif'], nexus:['Plus Jakarta Sans','sans-serif'] }
 }}}
 </script>
 <style>
 body{font-family:'Poppins',sans-serif;background-color:#FFF8E1;color:#1A1A1A;overflow-x:hidden}
 .font-display{font-family:'Anton','Bebas Neue',sans-serif;letter-spacing:.05em}
 .font-script{font-family:'Kaushan Script',cursive}
+.font-nexus{font-family:'Plus Jakarta Sans',sans-serif}
 .no-scrollbar::-webkit-scrollbar{display:none}
 .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
 .backdrop-blur-custom{backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
-/* anchor sections header ke neeche na chhupein */
 section[id]{scroll-margin-top:80px}
 .card-3d-wrapper{perspective:1000px}
 .card-3d{transition:transform .1s ease-out,box-shadow .3s ease}
@@ -33,7 +33,7 @@ section[id]{scroll-margin-top:80px}
 </head>
 <body class="bg-brandCream text-brandDark antialiased selection:bg-brandYellow selection:text-brandDark">
 
-<!-- WhatsApp icon (ek hi jagah define, baqi jagah reuse) -->
+<!-- WhatsApp icon -->
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
   <symbol id="wa-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></symbol>
 </svg>
@@ -42,7 +42,7 @@ section[id]{scroll-margin-top:80px}
 <script>
 const CONFIG = {
   brandName: "ZFC Pizza Fast Food",
-  whatsappNumber: "923284126623",
+  whatsappNumber: "923246540244",
   currency: "Rs.",
   deliveryFee: 0,
   minOrder: 0,
@@ -165,6 +165,19 @@ const MENU = [
   </div>
 </section>
 
+<!-- ABDULLAH NEXUS DIGITAL FLOATING CONTACT BUTTON (Shown after Hero Section) -->
+<div id="agency-contact-wrapper" class="fixed bottom-6 left-6 z-40 transition-all duration-500 transform translate-y-16 opacity-0 pointer-events-none">
+  <a id="agency-contact-btn" href="https://wa.me/923246540244?text=Hello%20Abdullah%20Nexus%20Digital,%20I%20am%20interested%20in%20building%20a%20high-converting%20website%20like%20this." target="_blank" rel="noopener" class="group relative flex items-center gap-3 bg-nexusDark text-white p-3 pr-5 rounded-2xl border border-nexusCyan/30 shadow-[0_10px_25px_rgba(0,82,255,0.3)] hover:shadow-[0_15px_35px_rgba(0,240,255,0.5)] hover:border-nexusCyan transition-all duration-300 font-nexus">
+    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-nexusBlue to-nexusCyan flex items-center justify-center shrink-0 shadow-inner group-hover:scale-105 transition-transform">
+      <svg class="w-5 h-5 fill-white" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.2L4 17.2V4h16v12z"/></svg>
+    </div>
+    <div class="flex flex-col text-left">
+      <span class="text-[10px] font-extrabold uppercase tracking-widest text-nexusCyan">ABDULLAH NEXUS DIGITAL</span>
+      <span class="text-xs font-bold text-white tracking-wide group-hover:text-nexusCyan transition-colors">Build Your Digital Future</span>
+    </div>
+  </a>
+</div>
+
 <!-- WHY US -->
 <section id="why-us" class="relative z-20 bg-brandYellow text-brandDark py-10 px-4 sm:px-6 lg:px-8 border-b-4 border-amber-500 shadow-inner">
   <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 text-center">
@@ -197,7 +210,7 @@ const MENU = [
       <div class="space-y-4 text-gray-700">
         <div class="flex items-start gap-4"><div class="w-10 h-10 rounded-full bg-brandYellow/30 flex items-center justify-center shrink-0 text-lg">📍</div><div><h4 class="font-bold text-brandDark">Location</h4><p class="text-sm">Lahore, Pakistan</p></div></div>
         <div class="flex items-start gap-4"><div class="w-10 h-10 rounded-full bg-brandYellow/30 flex items-center justify-center shrink-0 text-lg">⏰</div><div><h4 class="font-bold text-brandDark">Opening Hours</h4><p class="text-sm">12:00 PM - 12:00 AM (Open 7 Days a Week)</p></div></div>
-        <div class="flex items-start gap-4"><div class="w-10 h-10 rounded-full bg-brandYellow/30 flex items-center justify-center shrink-0 text-lg">📞</div><div><h4 class="font-bold text-brandDark">WhatsApp Orders</h4><p class="text-sm">0328 4126623</p></div></div>
+        <div class="flex items-start gap-4"><div class="w-10 h-10 rounded-full bg-brandYellow/30 flex items-center justify-center shrink-0 text-lg">📞</div><div><h4 class="font-bold text-brandDark">WhatsApp Orders</h4><p class="text-sm">+92 324 6540244</p></div></div>
       </div>
       <div class="mt-8">
         <a id="whatsapp-direct-btn" href="#" target="_blank" rel="noopener" class="inline-flex items-center gap-3 bg-emerald-600 hover:bg-emerald-700 text-white font-display uppercase tracking-wider px-6 py-3.5 rounded-xl shadow-lg transition-all text-sm sm:text-base">
@@ -217,7 +230,7 @@ const MENU = [
   </div>
 </section>
 
-<!-- FOOTER (mobile cart bar ke liye extra bottom padding) -->
+<!-- FOOTER -->
 <footer class="bg-brandDark text-white pt-12 pb-28 md:pb-12 border-t-2 border-brandYellow">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
     <div class="flex items-center gap-3">
@@ -248,8 +261,19 @@ const MENU = [
     </div>
 
     <form id="checkout-form" onsubmit="handleCheckout(event)" class="space-y-3 pt-2">
+      <!-- Demo Mode Note -->
+      <div class="p-3 bg-amber-100 border border-amber-300 rounded-xl text-xs text-amber-900 leading-snug font-medium">
+        📌 <strong>Demo Mode Active:</strong> Enter the target receiver's WhatsApp number below to receive this test order.
+      </div>
+
+      <!-- Test Receiver Number Input -->
+      <div>
+        <label for="cust-target-phone" class="block text-xs font-bold text-gray-700 mb-1">Target Receiver Number *</label>
+        <input type="tel" id="cust-target-phone" required autocomplete="tel" inputmode="numeric" placeholder="Enter Receiver's Number (e.g. 03246540244)" class="w-full px-4 py-2.5 rounded-xl border border-amber-400 bg-amber-50/50 focus:outline-none focus:border-brandRed text-sm font-semibold text-brandDark">
+      </div>
+
       <input type="text" id="cust-name" required autocomplete="name" placeholder="Full Name *" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-brandRed text-sm">
-      <input type="tel" id="cust-phone" required autocomplete="tel" inputmode="numeric" pattern="(03[0-9]{9}|\+?923[0-9]{9})" title="Pakistani number likhein, e.g. 03001234567" placeholder="Phone Number (e.g. 03001234567) *" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-brandRed text-sm">
+      <input type="tel" id="cust-phone" required autocomplete="tel" inputmode="numeric" pattern="(03[0-9]{9}|\+?923[0-9]{9})" title="Enter a valid Pakistani phone number" placeholder="Phone Number (e.g. 03001234567) *" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-brandRed text-sm">
       <textarea id="cust-address" required rows="2" autocomplete="street-address" placeholder="Complete Delivery Address in Lahore *" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-brandRed text-sm resize-none"></textarea>
       <input type="text" id="cust-notes" placeholder="Order Notes (optional, e.g. extra spicy)" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-brandRed text-sm">
       <div class="text-xs text-gray-500 flex items-center gap-1.5"><span>💵</span> Payment Method: <strong class="text-brandDark">Cash on Delivery</strong></div>
@@ -277,10 +301,9 @@ const MENU = [
 <script>
 /* ---------- helpers ---------- */
 const $ = id => document.getElementById(id);
-// innerHTML mein data daalne se pehle escape
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
-/* ---------- STATE (sab se pehle declare, taake TDZ error na aaye) ---------- */
+/* ---------- STATE ---------- */
 const selectedSizes = {};
 let activeCategory = "All";
 let cart = [];
@@ -289,7 +312,6 @@ let toastTimer = null;
 try {
   const saved = JSON.parse(localStorage.getItem('zfc_cart') || '[]');
   if (Array.isArray(saved)) {
-    // sirf wahi items rakho jo abhi menu mein maujood hain, price menu se lo
     cart = saved.map(c => {
       const item = MENU.find(m => m.id === c.id);
       const sz = item && item.sizes.find(s => s.label === c.size);
@@ -300,19 +322,18 @@ try {
 
 /* ---------- static bits ---------- */
 $('current-year').textContent = new Date().getFullYear();
-$('whatsapp-direct-btn').href = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent("Hello " + CONFIG.brandName + ", I want to ask about your menu and delivery.")}`;
+$('whatsapp-direct-btn').href = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent("Hello " + CONFIG.brandName + ", I would like to inquire about your menu and delivery service.")}`;
 
-/* ---------- SCROLL-SYNCED VIDEO (desktop + mobile, same smooth seek) ---------- */
+/* ---------- SCROLL-SYNCED VIDEO ---------- */
 (function () {
   const video = $('scroll-video');
   const container = $('hero-container');
   if (!video || !container) return;
 
   const sticky = container.firstElementChild;
-  const EASE = 0.12;          // 0.05 = bohat naram, 0.3 = tez
+  const EASE = 0.12;
   let current = 0, unlocked = false;
 
-  /* Address bar chhupne se innerHeight badalti hai, is liye hero ki apni height use hoti hai */
   let heroTop = 0, total = 0, lastW = 0;
   function measure() {
     heroTop = container.getBoundingClientRect().top + window.scrollY;
@@ -324,22 +345,20 @@ $('whatsapp-direct-btn').href = `https://wa.me/${CONFIG.whatsappNumber}?text=${e
     return Math.max(0, Math.min(1, (window.scrollY - heroTop) / total));
   }
   function seekTo(t) {
-    if (typeof video.fastSeek === 'function') video.fastSeek(t);  // Safari/iOS
+    if (typeof video.fastSeek === 'function') video.fastSeek(t);
     else video.currentTime = t;
   }
 
   function loop() {
     if (video.duration) {
       const target = getProgress() * video.duration;
-      current += (target - current) * EASE;               // lerp smoothing
+      current += (target - current) * EASE;
       if (Math.abs(target - current) < 0.005) current = target;
-      // seek tab karo jab pichla seek khatam ho chuka ho
       if (!video.seeking && Math.abs(video.currentTime - current) > 0.01) seekTo(current);
     }
     requestAnimationFrame(loop);
   }
 
-  // iOS: pehli touch par play->pause taake frames decode hon
   function unlock() {
     if (unlocked) return;
     unlocked = true;
@@ -355,6 +374,22 @@ $('whatsapp-direct-btn').href = `https://wa.me/${CONFIG.whatsappNumber}?text=${e
   requestAnimationFrame(loop);
 })();
 
+/* ---------- SHOW AGENCY CONTACT BUTTON AFTER HERO SECTION ---------- */
+window.addEventListener('scroll', () => {
+  const heroContainer = $('hero-container');
+  const agencyBtnWrapper = $('agency-contact-wrapper');
+  if (!heroContainer || !agencyBtnWrapper) return;
+
+  const heroBottom = heroContainer.offsetTop + heroContainer.offsetHeight;
+  if (window.scrollY > heroBottom - 500) {
+    agencyBtnWrapper.classList.remove('translate-y-16', 'opacity-0', 'pointer-events-none');
+    agencyBtnWrapper.classList.add('translate-y-0', 'opacity-100', 'pointer-events-auto');
+  } else {
+    agencyBtnWrapper.classList.add('translate-y-16', 'opacity-0', 'pointer-events-none');
+    agencyBtnWrapper.classList.remove('translate-y-0', 'opacity-100', 'pointer-events-auto');
+  }
+});
+
 /* ---------- MOBILE MENU ---------- */
 function toggleMobileMenu(force) {
   const menu = $('mobile-menu');
@@ -364,12 +399,10 @@ function toggleMobileMenu(force) {
   $('menu-icon-close').classList.toggle('hidden', !open);
   $('mobile-menu-btn').setAttribute('aria-expanded', String(open));
 }
-// bahar click par band
 document.addEventListener('click', e => {
   const menu = $('mobile-menu');
   if (!menu.classList.contains('hidden') && !menu.contains(e.target) && !$('mobile-menu-btn').contains(e.target)) toggleMobileMenu(false);
 });
-// Escape se menu / cart band
 document.addEventListener('keydown', e => {
   if (e.key !== 'Escape') return;
   toggleMobileMenu(false);
@@ -396,7 +429,7 @@ const PILL_OFF = 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100';
 function renderMenu() {
   const filtered = activeCategory === "All" ? MENU : MENU.filter(i => i.category === activeCategory);
   $('menu-grid').innerHTML = filtered.map(item => {
-    const selIdx = selectedSizes[item.id] ?? 0;   // pehle se chuni hui size yaad rakho
+    const selIdx = selectedSizes[item.id] ?? 0;
     const current = item.sizes[selIdx];
     return `
     <div class="card-3d-wrapper">
@@ -432,7 +465,6 @@ function renderMenu() {
 }
 
 function handle3DTilt(e, card) {
-  // button ke upar card hilna nahi chahiye, warna click miss ho jata hai
   if (e.target.closest('button')) { reset3DTilt(card); return; }
   const r = card.getBoundingClientRect();
   const xc = r.width / 2, yc = r.height / 2;
@@ -488,7 +520,6 @@ function saveAndRefreshCart() {
   updateCartUI();
 }
 
-// cart ke liye chhoti image (wahi menu wali image, bas chhota size)
 function thumbFor(id) {
   const m = MENU.find(x => x.id === id);
   return m ? m.image.replace('w=800', 'w=160') : '';
@@ -547,12 +578,12 @@ function toggleCartDrawer(open) {
   clearTimeout(drawerCloseTimer);
   if (open) {
     overlay.classList.remove('hidden');
-    drawer.removeAttribute('inert');           // ab keyboard focus ho sakta hai
+    drawer.removeAttribute('inert');
     document.body.style.overflow = 'hidden';
     requestAnimationFrame(() => drawer.classList.remove('translate-y-full', 'sm:translate-x-full'));
   } else {
     drawer.classList.add('translate-y-full', 'sm:translate-x-full');
-    drawer.setAttribute('inert', '');          // band hone par Tab se focus nahi hoga
+    drawer.setAttribute('inert', '');
     document.body.style.overflow = '';
     drawerCloseTimer = setTimeout(() => overlay.classList.add('hidden'), 300);
   }
@@ -574,35 +605,55 @@ function handleCheckout(e) {
   e.preventDefault();
   if (cart.length === 0) { showToast("Your cart is empty!"); return; }
 
+  const targetPhoneInput = $('cust-target-phone').value.trim();
   const name = $('cust-name').value.trim();
   const phone = $('cust-phone').value.trim();
   const address = $('cust-address').value.trim();
   const notes = $('cust-notes').value.trim();
 
-  const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
-  const total = subtotal + CONFIG.deliveryFee;
-  if (CONFIG.minOrder && subtotal < CONFIG.minOrder) {
-    showToast(`Minimum order ${CONFIG.currency} ${CONFIG.minOrder} hai.`);
+  // Clean target phone number for WhatsApp link
+  let targetNumber = targetPhoneInput.replace(/[^0-9]/g, '');
+  if (targetNumber.startsWith('03')) {
+    targetNumber = '92' + targetNumber.substring(1);
+  } else if (!targetNumber.startsWith('92') && targetNumber.length === 10) {
+    targetNumber = '92' + targetNumber;
+  }
+
+  if (!targetNumber) {
+    showToast("Please enter a valid receiver phone number.");
     return;
   }
 
-  const items = cart.map((it, i) => `${i + 1}) ${it.name} (${it.size}) x${it.qty} = ${CONFIG.currency} ${it.price * it.qty}`).join('\n');
-  const message = `🍕 *New Order - ${CONFIG.brandName}*\n\n` +
-    `👤 Name: ${name}\n📞 Phone: ${phone}\n📍 Address: ${address}\n\n` +
-    `*Items:*\n${items}\n\n` +
-    `Subtotal: ${CONFIG.currency} ${subtotal}\nDelivery: Free\n*Total: ${CONFIG.currency} ${total}*\n\n` +
-    `📝 Notes: ${notes || "None"}\n💵 Payment: Cash on Delivery`;
+  const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  const total = subtotal + CONFIG.deliveryFee;
 
-  const url = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
+  const items = cart.map((it, i) => `${i + 1}) ${it.name} (${it.size}) x${it.qty} = ${CONFIG.currency} ${it.price * it.qty}`).join('\n');
+  
+  // Concise, expert-crafted English WhatsApp message format
+  const message = `🍕 *New Order Demo - ${CONFIG.brandName}*\n\n` +
+    `👤 *Customer Name:* ${name}\n` +
+    `📞 *Customer Phone:* ${phone}\n` +
+    `📍 *Delivery Address:* ${address}\n\n` +
+    `*Order Summary:*\n${items}\n\n` +
+    `Subtotal: ${CONFIG.currency} ${subtotal}\n` +
+    `Delivery: Free\n` +
+    `*Total Amount: ${CONFIG.currency} ${total}*\n\n` +
+    `📝 *Notes:* ${notes || "None"}\n` +
+    `💵 *Payment Method:* Cash on Delivery\n\n` +
+    `— — — — — — — — — — — — — — —\n` +
+    `✨ *Thank you for testing our interactive digital demo!*\n` +
+    `If you have any questions or require custom digital growth solutions for your business, feel free to contact us:\n` +
+    `💬 *Abdullah Nexus Digital:* +923246540244`;
+
+  const url = `https://wa.me/${targetNumber}?text=${encodeURIComponent(message)}`;
   const w = window.open(url, '_blank');
   if (!w || w.closed || typeof w.closed === 'undefined') window.location.href = url;
 
-  // order bhejne ke baad cart aur form saaf
   cart = [];
   saveAndRefreshCart();
   $('checkout-form').reset();
   toggleCartDrawer(false);
-  showToast("Your order is ready to send. Just press Send in WhatsApp!");
+  showToast("Order demo generated! Proceed to WhatsApp to send.");
 }
 
 /* ---------- INIT ---------- */
