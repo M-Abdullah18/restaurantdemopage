@@ -311,7 +311,7 @@ $('whatsapp-direct-btn').href = `https://wa.me/${CONFIG.whatsappNumber}?text=${e
   const sticky = container.firstElementChild;
   const isTouch = window.matchMedia('(pointer: coarse)').matches;
   const EASE = 0.12;          // desktop smoothing: 0.05 = bohat naram, 0.3 = tez
-  let current = 0, unlocked = false, canPlay = true, playing = false, rate = 1, lastSeekAt = 0;
+  let current = 0, unlocked = false, canPlay = true, playing = false, rate = 1, lastSeekAt = 0, localReady = false;
 
   /* Address bar chhupne se innerHeight badalti hai, is liye hero ki apni height use hoti hai */
   let heroTop = 0, total = 0, lastW = 0;
@@ -340,6 +340,35 @@ $('whatsapp-direct-btn').href = `https://wa.me/${CONFIG.whatsappNumber}?text=${e
     requestAnimationFrame(loopDesktop);
   }
 
+  /* MOBILE: neeche scroll par atakne ki asal wajah network hai. Video abhi download
+     nahi hui hoti, to aage ke frames ka intezar karna parta hai (upar scroll isliye
+     theek tha ke wo hissa pehle aa chuka hota hai). Is liye mobile par poori video
+     background mein download karke memory (blob) se chalate hain. Tayyar hone tak
+     hybrid chalta rahta hai, phir khud badal jata hai. */
+  function toRawUrl(u) {   // github.com/.../raw/... CORS nahi deta, raw.githubusercontent.com deta hai
+    const m = u.match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\/raw\/(?:refs\/heads\/)?(.+)$/);
+    return m ? `https://raw.githubusercontent.com/${m[1]}/${m[2]}/${m[3]}` : u;
+  }
+  async function loadIntoMemory() {
+    if (!isTouch || !window.fetch || !window.URL) return;
+    const srcEl = video.querySelector('source');
+    const src = srcEl ? srcEl.src : video.currentSrc;
+    if (!src) return;
+    try {
+      const res = await fetch(toRawUrl(src));
+      if (!res.ok) return;
+      const blob = new Blob([await res.blob()], { type: 'video/mp4' });
+      const url = URL.createObjectURL(blob);
+      const t = video.currentTime || 0;
+      video.pause(); playing = false;
+      video.addEventListener('loadedmetadata', () => {
+        video.currentTime = t; current = t; localReady = true;
+      }, { once: true });
+      video.src = url;
+      video.load();
+    } catch (e) { /* fail ho to asli link se hybrid chalta rahe */ }
+  }
+
   /* MOBILE: hybrid.
      - Scroll down: video normal play hoti hai (isi se mobile par data bhi buffer hota
        hai, jis se baad ka seek smooth hota hai). Speed sirf 3 fixed darjon mein badalti
@@ -351,7 +380,13 @@ $('whatsapp-direct-btn').href = `https://wa.me/${CONFIG.whatsappNumber}?text=${e
       const target = getProgress() * video.duration;
       const diff = target - video.currentTime;
 
-      if (canPlay && (diff > 0.15 || (playing && diff > 0.03))) {
+      if (localReady) {
+        // sab data memory mein hai: dono taraf seek (upar scroll jaisa smooth)
+        if (Math.abs(diff) > 0.03 && !video.seeking && now - lastSeekAt > 60) {
+          lastSeekAt = now;
+          seekTo(video.currentTime + diff * 0.5);
+        }
+      } else if (canPlay && (diff > 0.15 || (playing && diff > 0.03))) {
         const r = diff > 1 ? 4 : diff > 0.4 ? 2 : 1;
         if (r !== rate) { rate = r; video.playbackRate = r; }
         if (video.paused) {
@@ -385,6 +420,7 @@ $('whatsapp-direct-btn').href = `https://wa.me/${CONFIG.whatsappNumber}?text=${e
   window.addEventListener('load', measure);
   window.addEventListener('resize', () => { if (window.innerWidth !== lastW) measure(); });
   window.addEventListener('touchstart', unlock, { once: true, passive: true });
+  loadIntoMemory();
   requestAnimationFrame(isTouch ? loopTouch : loopDesktop);
 })();
 
