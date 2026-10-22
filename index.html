@@ -1,81 +1,636 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Restaurant Demo</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        html {
-            scroll-behavior: smooth;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZFC Pizza Fast Food — Lahore</title>
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Kaushan+Script&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = { theme: { extend: {
+  colors: { brandYellow:'#FFC20E', brandRed:'#E3262B', brandDark:'#1A1A1A', brandCream:'#FFF8E1' },
+  fontFamily: { display:['Anton','Bebas Neue','sans-serif'], script:['Kaushan Script','cursive'], sans:['Poppins','sans-serif'] }
+}}}
+</script>
+<style>
+body{font-family:'Poppins',sans-serif;background-color:#FFF8E1;color:#1A1A1A;overflow-x:hidden}
+.font-display{font-family:'Anton','Bebas Neue',sans-serif;letter-spacing:.05em}
+.font-script{font-family:'Kaushan Script',cursive}
+.no-scrollbar::-webkit-scrollbar{display:none}
+.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+.backdrop-blur-custom{backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+/* anchor sections header ke neeche na chhupein */
+section[id]{scroll-margin-top:80px}
+.card-3d-wrapper{perspective:1000px}
+.card-3d{transition:transform .1s ease-out,box-shadow .3s ease;transform-style:preserve-3d}
+.line-clamp-2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+:focus-visible{outline:2px solid #E3262B;outline-offset:2px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+</style>
 </head>
-<body class="bg-black text-white m-0 p-0">
+<body class="bg-brandCream text-brandDark antialiased selection:bg-brandYellow selection:text-brandDark">
 
-    <!-- Hero Section with Scroll-Synced Video Container -->
-    <div id="hero-container" class="relative h-[300vh]">
-        <div class="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
-            <video 
-                id="scroll-video" 
-                muted 
-                playsinline 
-                webkit-playsinline 
-                preload="auto" 
-                style="will-change: transform; transform: translateZ(0);"
-                class="w-full h-full object-cover opacity-50 absolute inset-0">
-                <source src="https://github.com/M-Abdullah18/restaurantdemo/raw/refs/heads/main/demo.mp4" type="video/mp4">
-            </video>
-            
-            <!-- Hero Content -->
-            <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-4 z-10">
-                <h1 class="text-4xl md:text-6xl font-bold mb-4">Welcome to Our Restaurant</h1>
-                <p class="text-lg md:text-2xl text-gray-300">Experience the best taste and luxury</p>
-            </div>
+<!-- WhatsApp icon (ek hi jagah define, baqi jagah reuse) -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+  <symbol id="wa-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></symbol>
+</svg>
+
+<!-- CONFIG & MENU DATA -->
+<script>
+const CONFIG = {
+  brandName: "ZFC Pizza Fast Food",
+  whatsappNumber: "923284126623",
+  currency: "Rs.",
+  deliveryFee: 0,
+  minOrder: 0,
+  openingHours: "12:00 PM - 12:00 AM",
+  address: "Lahore, Pakistan"
+};
+
+const MENU = [
+  { id:"p1", category:"Pizza", name:"Special ZFC Supreme Pizza",
+    description:"Loaded with chicken tikka, smoked sausage, mushrooms, capsicum, olives & extra mozzarella cheese.",
+    image:"https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=800&auto=format&fit=crop",
+    sizes:[{label:"Small",price:599},{label:"Medium",price:1099},{label:"Large",price:1699}] },
+  { id:"p2", category:"Pizza", name:"Chicken Fajita Pizza",
+    description:"Spicy marinated chicken chunks, onions, green peppers, jalapeños and signature herbs.",
+    image:"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=800&auto=format&fit=crop",
+    sizes:[{label:"Small",price:549},{label:"Medium",price:999},{label:"Large",price:1549}] },
+  { id:"p3", category:"Pizza", name:"Classic Margherita Pizza",
+    description:"Simple yet delicious with rich tomato sauce, fresh basil leaves and 100% real mozzarella cheese.",
+    image:"https://images.unsplash.com/photo-1604382355076-af4b0eb60143?q=80&w=800&auto=format&fit=crop",
+    sizes:[{label:"Small",price:449},{label:"Medium",price:799},{label:"Large",price:1299}] },
+  { id:"p4", category:"Pizza", name:"Hot & Spicy Ranch Pizza",
+    description:"Zesty ranch sauce base, spicy grilled chicken, mushrooms, sun-dried tomatoes and red chillies.",
+    image:"https://images.unsplash.com/photo-1574071318508-1cdbab80d002?q=80&w=800&auto=format&fit=crop",
+    sizes:[{label:"Small",price:599},{label:"Medium",price:1099},{label:"Large",price:1699}] },
+  { id:"b1", category:"Burgers", name:"Crispy Zinger Burger",
+    description:"Extra crunchy fried chicken breast fillet, iceberg lettuce, special mayo in a toasted sesame bun.",
+    image:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=800&auto=format&fit=crop",
+    sizes:[{label:"Regular",price:380},{label:"With Cheese",price:440},{label:"Tower Double",price:590}] },
+  { id:"b2", category:"Burgers", name:"Jumbo Shami Burger",
+    description:"Traditional tender chicken shami kebab patty with fresh egg, onions, mint chutney and tamarind sauce.",
+    image:"https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=800&auto=format&fit=crop",
+    sizes:[{label:"Standard",price:220}] },
+  { id:"f1", category:"Fries & Sides", name:"Loaded Cheese Fries",
+    description:"Crispy golden french fries topped with warm melted cheddar cheese sauce, jalapeños & herbs.",
+    image:"https://images.unsplash.com/photo-1585109649139-366815a0d713?q=80&w=800&auto=format&fit=crop",
+    sizes:[{label:"Regular",price:290},{label:"Large",price:420}] },
+  { id:"f2", category:"Fries & Sides", name:"Zinger Shawarma Roll",
+    description:"Crispy chicken strips, garlic sauce, fresh veggies wrapped in soft Middle Eastern pita bread.",
+    image:"https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?q=80&w=800&auto=format&fit=crop",
+    sizes:[{label:"Regular",price:320}] },
+  { id:"f3", category:"Fries & Sides", name:"Club Sandwich with Fries",
+    description:"Triple-decker toasted bread filled with shredded chicken, egg, cheese, lettuce and mayo.",
+    image:"https://images.unsplash.com/photo-1528735602780-2552fd46c7af?q=80&w=800&auto=format&fit=crop",
+    sizes:[{label:"Full Serving",price:450}] },
+  { id:"d1", category:"Drinks", name:"Soft Drink (500ml / 1.5L)",
+    description:"Chilled refreshing carbonated beverages (Cola, Sprite, Fanta).",
+    image:"https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=800&auto=format&fit=crop",
+    sizes:[{label:"500ml",price:120},{label:"1.5L",price:250}] },
+  { id:"d2", category:"Drinks", name:"Mineral Water",
+    description:"Pure chilled bottled drinking water.",
+    image:"https://images.unsplash.com/photo-1548839140-29a749e1cf4d?q=80&w=800&auto=format&fit=crop",
+    sizes:[{label:"500ml",price:70},{label:"1.5L",price:130}] }
+];
+</script>
+
+<!-- HEADER -->
+<header class="sticky top-0 z-40 bg-brandDark text-white shadow-lg border-b-2 border-brandYellow">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+    <a href="#" class="flex items-center gap-3 group">
+      <div class="w-12 h-12 rounded-full overflow-hidden bg-brandYellow border-2 border-brandYellow flex items-center justify-center shadow-md shrink-0">
+        <img src="logo.png" alt="ZFC Pizza Fast Food Logo" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" onerror="this.outerHTML='<span class=\'text-2xl\'>🍕</span>'">
+      </div>
+      <div class="flex flex-col min-w-0">
+        <span class="font-display text-lg sm:text-2xl tracking-wider text-brandYellow truncate">ZFC <span class="text-white">PIZZA</span></span>
+        <span class="font-script text-xs text-gray-300 -mt-1 truncate">Fast Food Lahore</span>
+      </div>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-8 font-medium text-sm">
+      <a href="#menu" class="hover:text-brandYellow transition-colors">Menu</a>
+      <a href="#why-us" class="hover:text-brandYellow transition-colors">Why Us</a>
+      <a href="#contact" class="hover:text-brandYellow transition-colors">Contact</a>
+    </nav>
+
+    <div class="flex items-center gap-2 sm:gap-4">
+      <a href="#menu" class="hidden sm:inline-flex items-center justify-center bg-brandRed hover:bg-red-700 text-white font-display uppercase tracking-wider px-5 py-2.5 rounded-full shadow-md transition-all active:scale-95 text-sm">Order Now</a>
+
+      <button onclick="toggleCartDrawer(true)" aria-label="Open Cart" class="relative bg-brandYellow hover:bg-yellow-400 text-brandDark p-3 rounded-full shadow-md flex items-center justify-center transition-all active:scale-95 shrink-0">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+        <span id="cart-badge" class="absolute -top-1 -right-1 bg-brandRed text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold shadow-sm scale-0 transition-transform duration-200">0</span>
+      </button>
+
+      <button id="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle Mobile Menu" aria-expanded="false" class="md:hidden p-2 text-gray-300 hover:text-white shrink-0">
+        <svg id="menu-icon-open" class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg id="menu-icon-close" class="w-7 h-7 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="hidden md:hidden bg-brandDark border-t border-gray-800 px-4 pt-3 pb-5 space-y-3">
+    <a href="#menu" onclick="toggleMobileMenu(false)" class="block py-2 text-base font-medium hover:text-brandYellow">Menu</a>
+    <a href="#why-us" onclick="toggleMobileMenu(false)" class="block py-2 text-base font-medium hover:text-brandYellow">Why Us</a>
+    <a href="#contact" onclick="toggleMobileMenu(false)" class="block py-2 text-base font-medium hover:text-brandYellow">Contact</a>
+    <div class="pt-2"><a href="#menu" onclick="toggleMobileMenu(false)" class="block text-center bg-brandRed text-white font-display uppercase tracking-wider py-3 rounded-xl shadow">Order Now</a></div>
+  </div>
+</header>
+
+<!-- HERO (scroll-synced video) -->
+<section id="hero-container" class="relative h-[300vh] bg-brandDark text-white">
+  <div class="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
+    <div class="absolute inset-0 z-0">
+      <video id="scroll-video" muted playsinline webkit-playsinline preload="auto" class="w-full h-full object-cover opacity-50">
+        <source src="https://github.com/M-Abdullah18/restaurantdemo/raw/refs/heads/main/demo.mp4" type="video/mp4">
+      </video>
+      <div class="absolute inset-0 bg-gradient-to-t from-brandDark via-black/50 to-brandDark/40"></div>
+    </div>
+
+    <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-10">
+      <div class="inline-flex items-center gap-2 bg-brandYellow/90 text-brandDark px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold shadow-lg mb-6 tracking-wide uppercase animate-bounce"><span>🛵</span> FREE HOME DELIVERY ACROSS LAHORE</div>
+      <div class="font-script text-2xl sm:text-4xl text-brandYellow mb-2 drop-shadow-md">Fast Food</div>
+      <h1 class="font-display text-4xl sm:text-6xl md:text-7xl lg:text-8xl uppercase tracking-wider text-white leading-none mb-6 drop-shadow-2xl">HOT, CHEESY &amp; <span class="text-brandYellow">DELIVERED FREE</span></h1>
+      <p class="max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-gray-200 mb-8 font-normal leading-relaxed px-2">Fresh pizza, crispy burgers, loaded fries and more. Order in seconds directly on WhatsApp with zero hassle!</p>
+      <div class="text-xs text-brandYellow tracking-widest uppercase mb-6 animate-pulse">↓ Scroll Up &amp; Down For Instant Fast Video Control ↓</div>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 px-4">
+        <a href="#menu" class="w-full sm:w-auto bg-brandRed hover:bg-red-700 text-white font-display uppercase tracking-wider text-lg px-8 py-4 rounded-2xl shadow-xl transition-all hover:-translate-y-1 active:scale-95 text-center">Order Now</a>
+        <a href="#menu" class="w-full sm:w-auto border-2 border-brandYellow text-brandYellow hover:bg-brandYellow hover:text-brandDark font-display uppercase tracking-wider text-lg px-8 py-3.5 rounded-2xl shadow-lg transition-all hover:-translate-y-1 active:scale-95 text-center">View Menu</a>
+      </div>
+    </div>
+    <div class="absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-brandYellow/30 to-transparent pointer-events-none"></div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why-us" class="relative z-20 bg-brandYellow text-brandDark py-10 px-4 sm:px-6 lg:px-8 border-b-4 border-amber-500 shadow-inner">
+  <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 text-center">
+    <div class="bg-white/80 backdrop-blur rounded-2xl p-4 sm:p-5 shadow-md flex flex-col items-center justify-center hover:scale-105 transition-transform"><div class="text-3xl sm:text-4xl mb-2">🛵</div><h3 class="font-display text-base sm:text-xl uppercase tracking-wide">Free Home Delivery</h3><p class="text-[11px] sm:text-sm text-gray-700 mt-1">Lightning fast delivery right to your door</p></div>
+    <div class="bg-white/80 backdrop-blur rounded-2xl p-4 sm:p-5 shadow-md flex flex-col items-center justify-center hover:scale-105 transition-transform"><div class="text-3xl sm:text-4xl mb-2">🔥</div><h3 class="font-display text-base sm:text-xl uppercase tracking-wide">Fresh &amp; Hot</h3><p class="text-[11px] sm:text-sm text-gray-700 mt-1">Prepared fresh on every single order</p></div>
+    <div class="bg-white/80 backdrop-blur rounded-2xl p-4 sm:p-5 shadow-md flex flex-col items-center justify-center hover:scale-105 transition-transform"><div class="text-3xl sm:text-4xl mb-2">💬</div><h3 class="font-display text-base sm:text-xl uppercase tracking-wide">Easy WhatsApp</h3><p class="text-[11px] sm:text-sm text-gray-700 mt-1">Order instantly with one click on WhatsApp</p></div>
+    <div class="bg-white/80 backdrop-blur rounded-2xl p-4 sm:p-5 shadow-md flex flex-col items-center justify-center hover:scale-105 transition-transform"><div class="text-3xl sm:text-4xl mb-2">🌟</div><h3 class="font-display text-base sm:text-xl uppercase tracking-wide">Great Taste</h3><p class="text-[11px] sm:text-sm text-gray-700 mt-1">Authentic spices and premium cheese</p></div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+  <div class="text-center mb-12">
+    <span class="font-script text-2xl text-brandRed">Delicious Choices</span>
+    <h2 class="font-display text-4xl sm:text-5xl uppercase tracking-wider text-brandDark mt-1">Explore Our <span class="text-brandRed">Menu</span></h2>
+    <p class="text-gray-600 max-w-md mx-auto mt-2 text-sm sm:text-base px-2">Select your favorite items, pick a size, and send your order straight to our kitchen via WhatsApp.</p>
+  </div>
+  <div class="sticky top-20 z-30 bg-brandCream/95 backdrop-blur-custom py-4 mb-8 -mx-4 px-4 sm:mx-0 sm:px-0 border-b border-amber-200 overflow-x-auto no-scrollbar">
+    <div id="category-tabs" class="flex items-center justify-start sm:justify-center gap-3 min-w-max pb-1"></div>
+  </div>
+  <div id="menu-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"></div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="bg-white py-16 px-4 sm:px-6 lg:px-8 border-t border-amber-200">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+    <div>
+      <span class="font-script text-2xl text-brandRed">Get in Touch</span>
+      <h2 class="font-display text-3xl sm:text-4xl uppercase tracking-wider text-brandDark mt-1 mb-6">Visit Us or <span class="text-brandRed">Order Online</span></h2>
+      <div class="space-y-4 text-gray-700">
+        <div class="flex items-start gap-4"><div class="w-10 h-10 rounded-full bg-brandYellow/30 flex items-center justify-center shrink-0 text-lg">📍</div><div><h4 class="font-bold text-brandDark">Location</h4><p class="text-sm">Lahore, Pakistan</p></div></div>
+        <div class="flex items-start gap-4"><div class="w-10 h-10 rounded-full bg-brandYellow/30 flex items-center justify-center shrink-0 text-lg">⏰</div><div><h4 class="font-bold text-brandDark">Opening Hours</h4><p class="text-sm">12:00 PM - 12:00 AM (Open 7 Days a Week)</p></div></div>
+        <div class="flex items-start gap-4"><div class="w-10 h-10 rounded-full bg-brandYellow/30 flex items-center justify-center shrink-0 text-lg">📞</div><div><h4 class="font-bold text-brandDark">WhatsApp Orders</h4><p class="text-sm">0328 4126623</p></div></div>
+      </div>
+      <div class="mt-8">
+        <a id="whatsapp-direct-btn" href="#" target="_blank" rel="noopener" class="inline-flex items-center gap-3 bg-emerald-600 hover:bg-emerald-700 text-white font-display uppercase tracking-wider px-6 py-3.5 rounded-xl shadow-lg transition-all text-sm sm:text-base">
+          <svg class="w-6 h-6 fill-current shrink-0" aria-hidden="true"><use href="#wa-icon"/></svg>Chat on WhatsApp
+        </a>
+      </div>
+    </div>
+    <div class="bg-brandDark text-white p-6 sm:p-8 rounded-3xl shadow-2xl relative overflow-hidden border-2 border-brandYellow">
+      <div class="absolute -right-10 -bottom-10 text-9xl opacity-10 select-none">🍕</div>
+      <h3 class="font-display text-2xl sm:text-3xl uppercase tracking-wider text-brandYellow mb-4">Fastest Home Delivery</h3>
+      <p class="text-gray-300 mb-6 text-sm leading-relaxed">We ensure your food arrives piping hot and fresh. Enjoy restaurant-quality pizzas and burgers right in the comfort of your living room!</p>
+      <div class="bg-brandYellow/10 border border-brandYellow/30 p-4 rounded-2xl flex items-center gap-4">
+        <span class="text-3xl shrink-0">🚀</span>
+        <div><h4 class="font-bold text-brandYellow text-sm sm:text-base">Zero Delivery Charges</h4><p class="text-xs text-gray-300">Enjoy free home delivery on all orders across our service radius in Lahore.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER (mobile cart bar ke liye extra bottom padding) -->
+<footer class="bg-brandDark text-white pt-12 pb-28 md:pb-12 border-t-2 border-brandYellow">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-full overflow-hidden bg-brandYellow flex items-center justify-center shrink-0"><img src="logo.png" alt="ZFC Logo" class="w-full h-full object-cover" onerror="this.outerHTML='<span>🍕</span>'"></div>
+      <span class="font-display text-xl tracking-wider text-brandYellow">ZFC Pizza Fast Food</span>
+    </div>
+    <p class="text-xs text-gray-400">&copy; <span id="current-year"></span> ZFC Pizza Fast Food. All rights reserved.</p>
+    <div class="text-xs text-gray-400">Website demo by Abdullah Nexus Digital</div>
+  </div>
+</footer>
+
+<!-- CART DRAWER -->
+<div id="cart-overlay" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-custom hidden" onclick="toggleCartDrawer(false)"></div>
+
+<div id="cart-drawer" role="dialog" aria-modal="true" aria-label="Your order cart" inert class="fixed bottom-0 right-0 z-50 w-full sm:max-w-lg bg-white h-[90vh] sm:h-full shadow-2xl rounded-t-3xl sm:rounded-none flex flex-col transform translate-y-full sm:translate-y-0 sm:translate-x-full transition-transform duration-300">
+  <div class="p-5 bg-brandDark text-white flex items-center justify-between border-b-2 border-brandYellow rounded-t-3xl sm:rounded-none">
+    <div class="flex items-center gap-3"><span class="text-2xl">🛒</span><h3 class="font-display text-xl uppercase tracking-wider text-brandYellow">Your Order Cart</h3></div>
+    <button onclick="toggleCartDrawer(false)" aria-label="Close Cart" class="text-gray-300 hover:text-white p-1"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+  </div>
+
+  <div id="cart-items-container" class="flex-1 overflow-y-auto p-4 sm:p-6 divide-y divide-gray-100"></div>
+
+  <div class="bg-gray-50 border-t border-gray-200 p-4 sm:p-6 space-y-4 overflow-y-auto max-h-[60%]">
+    <div class="space-y-1.5 text-sm">
+      <div class="flex justify-between text-gray-600"><span>Subtotal</span><span id="cart-subtotal" class="font-semibold text-brandDark">Rs. 0</span></div>
+      <div class="flex justify-between text-gray-600"><span>Delivery Fee</span><span class="font-semibold text-emerald-600">Free</span></div>
+      <div class="flex justify-between text-base font-bold text-brandDark pt-2 border-t border-gray-200"><span>Total</span><span id="cart-total" class="text-brandRed text-lg">Rs. 0</span></div>
+    </div>
+
+    <form id="checkout-form" onsubmit="handleCheckout(event)" class="space-y-3 pt-2">
+      <input type="text" id="cust-name" required autocomplete="name" placeholder="Full Name *" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-brandRed text-sm">
+      <input type="tel" id="cust-phone" required autocomplete="tel" inputmode="numeric" pattern="(03[0-9]{9}|\+?923[0-9]{9})" title="Pakistani number likhein, e.g. 03001234567" placeholder="Phone Number (e.g. 03001234567) *" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-brandRed text-sm">
+      <textarea id="cust-address" required rows="2" autocomplete="street-address" placeholder="Complete Delivery Address in Lahore *" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-brandRed text-sm resize-none"></textarea>
+      <input type="text" id="cust-notes" placeholder="Order Notes (optional, e.g. extra spicy)" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-brandRed text-sm">
+      <div class="text-xs text-gray-500 flex items-center gap-1.5"><span>💵</span> Payment Method: <strong class="text-brandDark">Cash on Delivery</strong></div>
+      <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-display uppercase tracking-wider py-4 rounded-xl shadow-lg flex items-center justify-center gap-2 transition-all active:scale-95 text-base">
+        <svg class="w-5 h-5 fill-current" aria-hidden="true"><use href="#wa-icon"/></svg>Send Order on WhatsApp
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- MOBILE CART BAR -->
+<div id="mobile-cart-bar" class="fixed bottom-0 left-0 right-0 z-40 bg-brandDark text-white p-4 shadow-2xl border-t-2 border-brandYellow transform translate-y-full transition-transform duration-300 md:hidden flex items-center justify-between">
+  <div>
+    <div id="mobile-bar-count" class="text-xs text-brandYellow font-bold">0 items in cart</div>
+    <div id="mobile-bar-total" class="text-lg font-display tracking-wider">Rs. 0</div>
+  </div>
+  <button onclick="toggleCartDrawer(true)" class="bg-brandRed hover:bg-red-700 text-white font-display uppercase tracking-wider px-6 py-2.5 rounded-xl shadow-md text-sm">View Cart</button>
+</div>
+
+<!-- TOAST -->
+<div id="toast" role="status" aria-live="polite" class="fixed top-24 right-4 left-4 sm:left-auto z-50 bg-brandDark text-white px-5 py-3 rounded-xl shadow-2xl border border-brandYellow transform -translate-y-[200%] opacity-0 transition-all duration-300 flex items-center gap-3">
+  <span class="text-xl">✅</span><span id="toast-msg" class="text-sm font-medium"></span>
+</div>
+
+<script>
+/* ---------- helpers ---------- */
+const $ = id => document.getElementById(id);
+// innerHTML mein data daalne se pehle escape
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+/* ---------- STATE (sab se pehle declare, taake TDZ error na aaye) ---------- */
+const selectedSizes = {};
+let activeCategory = "All";
+let cart = [];
+let toastTimer = null;
+
+try {
+  const saved = JSON.parse(localStorage.getItem('zfc_cart') || '[]');
+  if (Array.isArray(saved)) {
+    // sirf wahi items rakho jo abhi menu mein maujood hain, price menu se lo
+    cart = saved.map(c => {
+      const item = MENU.find(m => m.id === c.id);
+      const sz = item && item.sizes.find(s => s.label === c.size);
+      return sz ? { cartKey: `${item.id}-${sz.label}`, id: item.id, name: item.name, size: sz.label, price: sz.price, qty: Math.max(1, parseInt(c.qty) || 1) } : null;
+    }).filter(Boolean);
+  }
+} catch (e) { console.error("LocalStorage error:", e); }
+
+/* ---------- static bits ---------- */
+$('current-year').textContent = new Date().getFullYear();
+$('whatsapp-direct-btn').href = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent("Hello " + CONFIG.brandName + ", I want to ask about your menu and delivery.")}`;
+
+/* ---------- SCROLL-SYNCED VIDEO (smooth, mobile-safe) ---------- */
+(function () {
+  const video = $('scroll-video');
+  const container = $('hero-container');
+  if (!video || !container) return;
+
+  const sticky = container.firstElementChild;
+  const srcEl = video.querySelector('source');
+  const originalSrc = srcEl ? srcEl.src : video.currentSrc;
+  const isTouch = window.matchMedia('(pointer: coarse)').matches;
+  const EASE = isTouch ? 0.18 : 0.12;   // mobile par thora tez follow
+  let current = 0, unlocked = false;
+
+  /* Mobile par browser preload="auto" ko ignore karta hai, to har seek network se
+     data mangta hai aur video ruk ruk kar chalti hai. Poori video ek baar download
+     karke memory (blob) se chalate hain, taake har seek local ho. */
+  async function loadIntoMemory() {
+    if (!originalSrc || !window.fetch || !window.URL) return;
+    try {
+      const res = await fetch(originalSrc);
+      if (!res.ok) return;
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const resumeAt = video.currentTime || 0;
+      video.addEventListener('loadedmetadata', () => {
+        video.currentTime = resumeAt;
+        video.pause();
+      }, { once: true });
+      video.src = url;
+      video.load();
+    } catch (e) { /* fail ho to asli link se chalta rahe */ }
+  }
+
+  /* Mobile par address bar chhupne se window.innerHeight badalti hai, jis se progress
+     hilti thi. Ab hero ki apni fixed height use hoti hai, aur sirf width badalne par
+     dobara naapte hain. */
+  let heroTop = 0, total = 0, lastW = 0;
+  function measure() {
+    heroTop = container.getBoundingClientRect().top + window.scrollY;
+    total = container.offsetHeight - sticky.offsetHeight;
+    lastW = window.innerWidth;
+  }
+
+  function getProgress() {
+    if (total <= 0) return 0;
+    return Math.max(0, Math.min(1, (window.scrollY - heroTop) / total));
+  }
+
+  function seekTo(t) {
+    if (typeof video.fastSeek === 'function') video.fastSeek(t);  // Safari/iOS
+    else video.currentTime = t;
+  }
+
+  function loop() {
+    if (video.duration) {
+      const target = getProgress() * video.duration;
+      current += (target - current) * EASE;               // lerp smoothing
+      if (Math.abs(target - current) < 0.005) current = target;
+
+      // seek tab karo jab pichla seek khatam ho chuka ho
+      if (!video.seeking && Math.abs(video.currentTime - current) > 0.01) {
+        seekTo(current);
+      }
+    }
+    requestAnimationFrame(loop);
+  }
+
+  // iOS: pehli touch par play->pause taake frames decode hon
+  function unlock() {
+    if (unlocked) return;
+    unlocked = true;
+    const p = video.play();
+    if (p && p.then) p.then(() => video.pause()).catch(() => {});
+  }
+
+  video.pause();
+  measure();
+  window.addEventListener('load', measure);
+  window.addEventListener('resize', () => { if (window.innerWidth !== lastW) measure(); });
+  window.addEventListener('touchstart', unlock, { once: true, passive: true });
+  loadIntoMemory();
+  requestAnimationFrame(loop);
+})();
+
+/* ---------- MOBILE MENU ---------- */
+function toggleMobileMenu(force) {
+  const menu = $('mobile-menu');
+  const open = typeof force === 'boolean' ? force : menu.classList.contains('hidden');
+  menu.classList.toggle('hidden', !open);
+  $('menu-icon-open').classList.toggle('hidden', open);
+  $('menu-icon-close').classList.toggle('hidden', !open);
+  $('mobile-menu-btn').setAttribute('aria-expanded', String(open));
+}
+// bahar click par band
+document.addEventListener('click', e => {
+  const menu = $('mobile-menu');
+  if (!menu.classList.contains('hidden') && !menu.contains(e.target) && !$('mobile-menu-btn').contains(e.target)) toggleMobileMenu(false);
+});
+// Escape se menu / cart band
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  toggleMobileMenu(false);
+  if (!$('cart-drawer').hasAttribute('inert')) toggleCartDrawer(false);
+});
+
+/* ---------- MENU RENDER ---------- */
+function renderCategories() {
+  const cats = ["All", ...new Set(MENU.map(i => i.category))];
+  $('category-tabs').innerHTML = cats.map(cat => `
+    <button onclick="filterCategory('${esc(cat)}')" aria-pressed="${activeCategory === cat}" class="px-5 py-2.5 rounded-full font-display uppercase tracking-wider text-sm transition-all whitespace-nowrap shadow-sm ${activeCategory === cat ? 'bg-brandRed text-white shadow-md scale-105' : 'bg-white text-brandDark hover:bg-amber-100 border border-amber-200'}">${esc(cat)}</button>
+  `).join('');
+}
+
+function filterCategory(cat) {
+  activeCategory = cat;
+  renderCategories();
+  renderMenu();
+}
+
+const PILL_ON  = 'bg-brandDark text-brandYellow border-brandDark shadow';
+const PILL_OFF = 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100';
+
+function renderMenu() {
+  const filtered = activeCategory === "All" ? MENU : MENU.filter(i => i.category === activeCategory);
+  $('menu-grid').innerHTML = filtered.map(item => {
+    const selIdx = selectedSizes[item.id] ?? 0;   // pehle se chuni hui size yaad rakho
+    const current = item.sizes[selIdx];
+    return `
+    <div class="card-3d-wrapper">
+      <div class="group card-3d bg-white rounded-3xl p-5 shadow-lg border border-amber-100 flex flex-col justify-between h-full" onmousemove="handle3DTilt(event, this)" onmouseleave="reset3DTilt(this)">
+        <div>
+          <div class="relative h-48 rounded-2xl overflow-hidden mb-4 bg-amber-100">
+            <img src="${esc(item.image)}" alt="${esc(item.name)}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.outerHTML='<div class=\\'w-full h-full flex items-center justify-center text-4xl bg-amber-100\\'>🍕</div>'">
+            <span class="absolute top-3 right-3 bg-brandDark/80 backdrop-blur text-brandYellow text-xs font-bold px-3 py-1 rounded-full uppercase">${esc(item.category)}</span>
+          </div>
+          <h3 class="font-display text-xl uppercase tracking-wide text-brandDark mb-1">${esc(item.name)}</h3>
+          <p class="text-gray-600 text-xs sm:text-sm mb-4 line-clamp-2">${esc(item.description)}</p>
         </div>
-    </div>
+        <div>
+          <div class="mb-4">
+            <span class="text-xs font-bold text-gray-500 uppercase tracking-wide block mb-1.5">Select Size / Variant:</span>
+            <div class="flex flex-wrap gap-2">
+              ${item.sizes.map((sz, idx) => `
+                <button onclick="selectSize('${item.id}', ${idx})" class="size-pill-${item.id} px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all ${idx === selIdx ? PILL_ON : PILL_OFF}">${esc(sz.label)} (${CONFIG.currency}${sz.price})</button>
+              `).join('')}
+            </div>
+          </div>
+          <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+            <div>
+              <span class="text-xs text-gray-400 block uppercase">Price</span>
+              <span id="price-${item.id}" class="font-display text-xl text-brandRed tracking-wide">${CONFIG.currency} ${current.price}</span>
+            </div>
+            <button onclick="addToCart('${item.id}')" class="bg-brandRed hover:bg-red-700 text-white font-display uppercase tracking-wider px-5 py-2.5 rounded-xl shadow-md transition-all active:scale-95 text-sm">+ Add</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
 
-    <!-- Rest of your website content -->
-    <div class="min-h-screen bg-neutral-900 flex items-center justify-center relative z-20">
-        <h2 class="text-3xl font-semibold">Our Menu & Specialties</h2>
-    </div>
+function handle3DTilt(e, card) {
+  const r = card.getBoundingClientRect();
+  const xc = r.width / 2, yc = r.height / 2;
+  const tiltX = ((e.clientY - r.top - yc) / yc) * 7;
+  const tiltY = -((e.clientX - r.left - xc) / xc) * 7;
+  card.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateY(-4px)`;
+  card.style.boxShadow = `0 20px 30px -10px rgba(0,0,0,0.15)`;
+}
+function reset3DTilt(card) {
+  card.style.transform = `rotateX(0deg) rotateY(0deg) translateY(0px)`;
+  card.style.boxShadow = `0 10px 15px -3px rgba(0,0,0,0.1)`;
+}
 
-    <script>
-        const video = document.getElementById('scroll-video');
-        const heroContainer = document.getElementById('hero-container');
+function selectSize(itemId, idx) {
+  const item = MENU.find(i => i.id === itemId);
+  if (!item) return;
+  selectedSizes[itemId] = idx;
+  document.querySelectorAll(`.size-pill-${itemId}`).forEach((p, i) => {
+    p.className = `size-pill-${itemId} px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all ${i === idx ? PILL_ON : PILL_OFF}`;
+  });
+  const priceEl = $(`price-${itemId}`);
+  if (priceEl) priceEl.textContent = `${CONFIG.currency} ${item.sizes[idx].price}`;
+}
 
-        let targetTime = 0;
-        let currentTime = 0;
+/* ---------- CART ---------- */
+function addToCart(itemId) {
+  const item = MENU.find(i => i.id === itemId);
+  if (!item) return;
+  const size = item.sizes[selectedSizes[itemId] ?? 0];
+  const cartKey = `${itemId}-${size.label}`;
+  const existing = cart.find(c => c.cartKey === cartKey);
+  if (existing) existing.qty += 1;
+  else cart.push({ cartKey, id: item.id, name: item.name, size: size.label, price: size.price, qty: 1 });
+  saveAndRefreshCart();
+  showToast(`Added ${item.name} (${size.label}) to cart!`);
+}
 
-        // Ensure video metadata is loaded
-        video.addEventListener('loadedmetadata', () => {
-            console.log("Video duration loaded:", video.duration);
-        });
+function updateCartQty(cartKey, change) {
+  const item = cart.find(c => c.cartKey === cartKey);
+  if (!item) return;
+  item.qty += change;
+  if (item.qty <= 0) cart = cart.filter(c => c.cartKey !== cartKey);
+  saveAndRefreshCart();
+}
 
-        window.addEventListener('scroll', () => {
-            const rect = heroContainer.getBoundingClientRect();
-            const containerHeight = heroContainer.offsetHeight - window.innerHeight;
-            
-            // Calculate scroll progress specifically inside the hero container
-            let scrollProgress = -rect.top / containerHeight;
-            scrollProgress = Math.max(0, Math.min(1, scrollProgress)); // Clamp between 0 and 1
+function removeFromCart(cartKey) {
+  cart = cart.filter(c => c.cartKey !== cartKey);
+  saveAndRefreshCart();
+}
 
-            if (video.duration) {
-                targetTime = scrollProgress * video.duration;
-            }
-        });
+function saveAndRefreshCart() {
+  try { localStorage.setItem('zfc_cart', JSON.stringify(cart)); } catch (e) {}
+  updateCartUI();
+}
 
-        // Smooth 60fps render loop using requestAnimationFrame
-        function render() {
-            currentTime += (targetTime - currentTime) * 0.1; // Smooth interpolation
-            if (Math.abs(targetTime - currentTime) > 0.001) {
-                video.currentTime = currentTime;
-            }
-            requestAnimationFrame(render);
-        }
+function updateCartUI() {
+  const badge = $('cart-badge'), bar = $('mobile-cart-bar'), container = $('cart-items-container');
+  const totalItems = cart.reduce((s, i) => s + i.qty, 0);
+  const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  const total = subtotal + CONFIG.deliveryFee;
 
-        requestAnimationFrame(render);
-    </script>
+  badge.textContent = totalItems;
+  badge.classList.toggle('scale-0', totalItems === 0);
+  badge.classList.toggle('scale-100', totalItems > 0);
+  bar.classList.toggle('translate-y-full', totalItems === 0);
+
+  $('mobile-bar-count').textContent = `${totalItems} item${totalItems === 1 ? '' : 's'} in cart`;
+  $('mobile-bar-total').textContent = `${CONFIG.currency} ${total}`;
+  $('cart-subtotal').textContent = `${CONFIG.currency} ${subtotal}`;
+  $('cart-total').textContent = `${CONFIG.currency} ${total}`;
+
+  if (cart.length === 0) {
+    container.innerHTML = `
+      <div class="text-center py-16 text-gray-400">
+        <div class="text-5xl mb-3">🛒</div>
+        <p class="font-medium text-base">Your cart is empty.</p>
+        <p class="text-xs text-gray-400 mt-1">Add some delicious pizzas or burgers to start your order!</p>
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = cart.map(item => `
+    <div class="py-4 flex items-center justify-between gap-4 first:pt-0 last:pb-0">
+      <div class="flex-1 min-w-0">
+        <h4 class="font-bold text-brandDark text-sm truncate">${esc(item.name)}</h4>
+        <span class="inline-block bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-md mt-0.5">Size: ${esc(item.size)}</span>
+        <div class="text-xs font-semibold text-brandRed mt-1">${CONFIG.currency} ${item.price * item.qty}</div>
+      </div>
+      <div class="flex items-center gap-2 shrink-0">
+        <div class="flex items-center border border-gray-300 rounded-xl overflow-hidden bg-white shadow-sm">
+          <button onclick="updateCartQty('${item.cartKey}', -1)" aria-label="Decrease quantity" class="px-2.5 py-1 text-gray-600 hover:bg-gray-100 font-bold text-sm">-</button>
+          <span class="px-2.5 py-1 text-xs font-bold text-brandDark">${item.qty}</span>
+          <button onclick="updateCartQty('${item.cartKey}', 1)" aria-label="Increase quantity" class="px-2.5 py-1 text-gray-600 hover:bg-gray-100 font-bold text-sm">+</button>
+        </div>
+        <button onclick="removeFromCart('${item.cartKey}')" aria-label="Remove item" class="text-red-500 hover:text-red-700 p-1.5">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+        </button>
+      </div>
+    </div>`).join('');
+}
+
+let drawerCloseTimer = null;
+function toggleCartDrawer(open) {
+  const drawer = $('cart-drawer'), overlay = $('cart-overlay');
+  clearTimeout(drawerCloseTimer);
+  if (open) {
+    overlay.classList.remove('hidden');
+    drawer.removeAttribute('inert');           // ab keyboard focus ho sakta hai
+    document.body.style.overflow = 'hidden';
+    requestAnimationFrame(() => drawer.classList.remove('translate-y-full', 'sm:translate-x-full'));
+  } else {
+    drawer.classList.add('translate-y-full', 'sm:translate-x-full');
+    drawer.setAttribute('inert', '');          // band hone par Tab se focus nahi hoga
+    document.body.style.overflow = '';
+    drawerCloseTimer = setTimeout(() => overlay.classList.add('hidden'), 300);
+  }
+}
+
+function showToast(msg) {
+  const toast = $('toast');
+  $('toast-msg').textContent = msg;
+  toast.classList.remove('-translate-y-[200%]', 'opacity-0');
+  toast.classList.add('translate-y-0', 'opacity-100');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    toast.classList.remove('translate-y-0', 'opacity-100');
+    toast.classList.add('-translate-y-[200%]', 'opacity-0');
+  }, 3000);
+}
+
+function handleCheckout(e) {
+  e.preventDefault();
+  if (cart.length === 0) { showToast("Your cart is empty!"); return; }
+
+  const name = $('cust-name').value.trim();
+  const phone = $('cust-phone').value.trim();
+  const address = $('cust-address').value.trim();
+  const notes = $('cust-notes').value.trim();
+
+  const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  const total = subtotal + CONFIG.deliveryFee;
+  if (CONFIG.minOrder && subtotal < CONFIG.minOrder) {
+    showToast(`Minimum order ${CONFIG.currency} ${CONFIG.minOrder} hai.`);
+    return;
+  }
+
+  const items = cart.map((it, i) => `${i + 1}) ${it.name} (${it.size}) x${it.qty} = ${CONFIG.currency} ${it.price * it.qty}`).join('\n');
+  const message = `🍕 *New Order - ${CONFIG.brandName}*\n\n` +
+    `👤 Name: ${name}\n📞 Phone: ${phone}\n📍 Address: ${address}\n\n` +
+    `*Items:*\n${items}\n\n` +
+    `Subtotal: ${CONFIG.currency} ${subtotal}\nDelivery: Free\n*Total: ${CONFIG.currency} ${total}*\n\n` +
+    `📝 Notes: ${notes || "None"}\n💵 Payment: Cash on Delivery`;
+
+  const url = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
+  const w = window.open(url, '_blank');
+  if (!w || w.closed || typeof w.closed === 'undefined') window.location.href = url;
+
+  // order bhejne ke baad cart aur form saaf
+  cart = [];
+  saveAndRefreshCart();
+  $('checkout-form').reset();
+  toggleCartDrawer(false);
+  showToast("Your order is ready to send. Just press Send in WhatsApp!");
+}
+
+/* ---------- INIT ---------- */
+renderCategories();
+renderMenu();
+updateCartUI();
+</script>
 </body>
 </html>
