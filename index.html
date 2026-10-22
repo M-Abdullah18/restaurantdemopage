@@ -302,71 +302,67 @@ try {
 $('current-year').textContent = new Date().getFullYear();
 $('whatsapp-direct-btn').href = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent("Hello " + CONFIG.brandName + ", I want to ask about your menu and delivery.")}`;
 
-/* ---------- SCROLL-SYNCED VIDEO (smooth, mobile-safe) ---------- */
+/* ---------- SCROLL-SYNCED VIDEO (desktop: seek, mobile: forward-play) ---------- */
 (function () {
   const video = $('scroll-video');
   const container = $('hero-container');
   if (!video || !container) return;
 
   const sticky = container.firstElementChild;
-  const srcEl = video.querySelector('source');
-  const originalSrc = srcEl ? srcEl.src : video.currentSrc;
   const isTouch = window.matchMedia('(pointer: coarse)').matches;
-  const EASE = isTouch ? 0.18 : 0.12;   // mobile par thora tez follow
-  let current = 0, unlocked = false;
+  const EASE = 0.12;          // desktop smoothing: 0.05 = bohat naram, 0.3 = tez
+  let current = 0, unlocked = false, canPlay = true, lastSeekAt = 0;
 
-  /* Mobile par browser preload="auto" ko ignore karta hai, to har seek network se
-     data mangta hai aur video ruk ruk kar chalti hai. Poori video ek baar download
-     karke memory (blob) se chalate hain, taake har seek local ho. */
-  async function loadIntoMemory() {
-    if (!originalSrc || !window.fetch || !window.URL) return;
-    try {
-      const res = await fetch(originalSrc);
-      if (!res.ok) return;
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      const resumeAt = video.currentTime || 0;
-      video.addEventListener('loadedmetadata', () => {
-        video.currentTime = resumeAt;
-        video.pause();
-      }, { once: true });
-      video.src = url;
-      video.load();
-    } catch (e) { /* fail ho to asli link se chalta rahe */ }
-  }
-
-  /* Mobile par address bar chhupne se window.innerHeight badalti hai, jis se progress
-     hilti thi. Ab hero ki apni fixed height use hoti hai, aur sirf width badalne par
-     dobara naapte hain. */
+  /* Address bar chhupne se innerHeight badalti hai, is liye hero ki apni height use hoti hai */
   let heroTop = 0, total = 0, lastW = 0;
   function measure() {
     heroTop = container.getBoundingClientRect().top + window.scrollY;
     total = container.offsetHeight - sticky.offsetHeight;
     lastW = window.innerWidth;
   }
-
   function getProgress() {
     if (total <= 0) return 0;
     return Math.max(0, Math.min(1, (window.scrollY - heroTop) / total));
   }
-
   function seekTo(t) {
     if (typeof video.fastSeek === 'function') video.fastSeek(t);  // Safari/iOS
     else video.currentTime = t;
   }
 
-  function loop() {
+  /* DESKTOP: pehle jaisa smooth seek (ye already theek chal raha hai) */
+  function loopDesktop() {
     if (video.duration) {
       const target = getProgress() * video.duration;
-      current += (target - current) * EASE;               // lerp smoothing
+      current += (target - current) * EASE;
       if (Math.abs(target - current) < 0.005) current = target;
+      if (!video.seeking && Math.abs(video.currentTime - current) > 0.01) seekTo(current);
+    }
+    requestAnimationFrame(loopDesktop);
+  }
 
-      // seek tab karo jab pichla seek khatam ho chuka ho
-      if (!video.seeking && Math.abs(video.currentTime - current) > 0.01) {
-        seekTo(current);
+  /* MOBILE: seek mobile ke decoder ke liye mehnga hai, forward play sasta.
+     - Scroll down: video normal play hoti hai, speed scroll ke gap ke hisaab se
+     - Scroll up: video pause, aur throttled seek se peechay aati hai */
+  function loopTouch(now) {
+    if (video.duration) {
+      const target = getProgress() * video.duration;
+      const diff = target - video.currentTime;
+
+      if (diff > 0.08 && canPlay) {
+        video.playbackRate = Math.min(8, Math.max(0.25, diff * 4));
+        if (video.paused) {
+          const p = video.play();
+          if (p && p.catch) p.catch(() => { canPlay = false; });   // play block ho to seek par wapas
+        }
+      } else {
+        if (!video.paused) video.pause();
+        if (Math.abs(diff) > 0.05 && !video.seeking && now - lastSeekAt > 90) {
+          lastSeekAt = now;
+          seekTo(video.currentTime + diff * 0.5);   // aadha faasla, naram wapsi
+        }
       }
     }
-    requestAnimationFrame(loop);
+    requestAnimationFrame(loopTouch);
   }
 
   // iOS: pehli touch par play->pause taake frames decode hon
@@ -382,8 +378,7 @@ $('whatsapp-direct-btn').href = `https://wa.me/${CONFIG.whatsappNumber}?text=${e
   window.addEventListener('load', measure);
   window.addEventListener('resize', () => { if (window.innerWidth !== lastW) measure(); });
   window.addEventListener('touchstart', unlock, { once: true, passive: true });
-  loadIntoMemory();
-  requestAnimationFrame(loop);
+  requestAnimationFrame(isTouch ? loopTouch : loopDesktop);
 })();
 
 /* ---------- MOBILE MENU ---------- */
